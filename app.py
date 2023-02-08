@@ -1,4 +1,10 @@
-"""Blogly application."""
+# Ioana A Mititean
+# Unit 23 Exercise - Blogly App
+
+"""
+Blogly application.
+"""
+
 
 from flask import Flask
 from models import db, connect_db
