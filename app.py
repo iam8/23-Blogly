@@ -57,6 +57,19 @@ def add_user():
     Add new user to Blogly app database and redirect to /users (user list) page.
     """
 
+    first_name = request.form["firstname"]
+    last_name = request.form["lastname"]
+    image_url = request.form["imageurl"]
+
+    new_user = User(first_name=first_name,
+                    last_name=last_name,
+                    image_url=image_url)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect("/users")
+
 
 @app.route("/users/<int:user_id>")
 def display_user_details(user_id):
