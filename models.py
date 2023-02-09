@@ -33,7 +33,7 @@ class User(db.Model):
 
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    image_url = db.Column(db.String(200), server_default=PLACEHOLDER_IMG)
+    image_url = db.Column(db.Text, server_default=PLACEHOLDER_IMG)
 
     def get_full_name(self):
         """
