@@ -13,14 +13,13 @@ with app.app_context():
     db.drop_all()
     db.create_all()
 
-# If table isn't empty, empty it
-User.query.delete()
+    User.query.delete()
 
-# Add users
-jane = User(first_name="Jane", last_name="Doe")
-xavier = User(first_name="Xavier", last_name="Xavies", image_url="dummylink")
-ally = User(first_name="Ally", last_name="Andrews", image_url="dummylink2")
+    # Add users
+    jane = User(first_name="Jane", last_name="Doe")
+    xavier = User(first_name="Xavier", last_name="Xavies", image_url="dummylink")
+    ally = User(first_name="Ally", last_name="Andrews", image_url="dummylink2")
 
-# Add users to session and commit
-db.session.add_all([jane, xavier, ally])
-db.session.commit()
+    # Add users to session and commit
+    db.session.add_all([jane, xavier, ally])
+    db.session.commit()
