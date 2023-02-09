@@ -23,9 +23,21 @@ class FlaskTests(TestCase):
         location.
         """
 
+        with app.test_client() as client:
+            resp = client.get("/")
+
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, "/users")
+
     def test_homepage_redirect_followed(self):
         """
         Test that GET '/' redirects to a page with the appropriate content.
         """
 
+        with app.test_client() as client:
+            resp = client.get("/", follow_redirects=True)
+            html = resp.get_data(as_text=True)
 
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Users</h1>", html)
+            self.assertIn("<button>Add user</button>", html)
