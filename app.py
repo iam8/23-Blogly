@@ -77,6 +77,9 @@ def display_user_details(user_id):
     Show information about the user with the given ID, and buttons to edit or delete that user.
     """
 
+    user = User.query.get(user_id)
+    return render_template("user_details.jinja2", user=user)
+
 
 @app.route("/users/<int:user_id>/edit")
 def display_edit_form(user_id):
