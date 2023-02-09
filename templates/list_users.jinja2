@@ -10,7 +10,6 @@
 {% endblock title %}
 
 {% block content %}
-    Here is some content; test that this shows up
 
     <h1>Users</h1>
 
@@ -19,5 +18,9 @@
             <a href="/users/{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</a>
         </li>
     {% endfor %}
+
+    <form action="/users/new", method="GET">
+        <button>Add user</button>
+    </form>
 
 {% endblock content %}
