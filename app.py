@@ -87,6 +87,8 @@ def display_edit_form(user_id):
     Display the edit page for the user with the given ID.
     """
 
+    return f"Edit page goes here: {user_id}"
+
 
 @app.route("/users/<int:user_id>/edit", methods=["POST"])
 def edit_user(user_id):
