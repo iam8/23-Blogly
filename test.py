@@ -14,7 +14,18 @@ app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
 
 class FlaskTests(TestCase):
     """
-    Flask integration tests - view functions.
+    Flask integration tests - tests for view functions.
     """
+
+    def test_homepage_redirect(self):
+        """
+        Test that GET '/' results in a status code of 302 and redirects to the appropriate
+        location.
+        """
+
+    def test_homepage_redirect_followed(self):
+        """
+        Test that GET '/' redirects to a page with the appropriate content.
+        """
 
 
