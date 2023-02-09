@@ -33,3 +33,15 @@ class User(db.Model):
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
     image_url = db.Column(db.Text)
+
+    def get_full_name(self):
+        """
+        Return the full name for this user.
+        """
+
+    def __repr__(self):
+        """
+        String representation of this user: <User id, first_name, last_name>
+        """
+
+        return f"<User {self.id} {self.first_name} {self.last_name}>"
