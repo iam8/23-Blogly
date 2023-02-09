@@ -48,6 +48,8 @@ def display_add_user_form():
     Display form to add a new user to Blogly app database.
     """
 
+    return render_template("create_user.jinja2")
+
 
 @app.route("/users/new", methods=["POST"])
 def add_user():
