@@ -7,6 +7,7 @@ Models for Blogly.
 
 from flask_sqlalchemy import SQLAlchemy
 
+PLACEHOLDER_IMG = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
 db = SQLAlchemy()
 
 
@@ -32,7 +33,7 @@ class User(db.Model):
 
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    image_url = db.Column(db.Text)
+    image_url = db.Column(db.String(200), server_default=PLACEHOLDER_IMG)
 
     def get_full_name(self):
         """
