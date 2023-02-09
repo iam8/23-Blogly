@@ -77,7 +77,7 @@ def display_user_details(user_id):
     Show information about the user with the given ID, and buttons to edit or delete that user.
     """
 
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
     return render_template("user_details.jinja2", user=user)
 
 
@@ -87,7 +87,7 @@ def display_edit_form(user_id):
     Display the edit page for the user with the given ID.
     """
 
-    user = User.query.get(user_id)
+    user = User.query.get_or_404(user_id)
     return render_template("edit_user.jinja2", user=user)
 
 
@@ -96,6 +96,19 @@ def edit_user(user_id):
     """
     Edit the user with the given ID and redirect to /users (user list) page.
     """
+
+    first_name = request.form["firstname"]
+    last_name = request.form["lastname"]
+    image_url = request.form["imageurl"]
+
+    user = User.query.get_or_404(user_id)
+    user.first_name = first_name
+    user.last_name = last_name
+    user.image_url = image_url
+
+    db.session.commit()
+
+    return redirect("/users")
 
 
 @app.route("/users/<int:user_id>/delete", methods=["POST"])
