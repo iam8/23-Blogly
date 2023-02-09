@@ -15,6 +15,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 
 connect_db(app)
 
+app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 app.config["SECRET_KEY"] = "O secreta foarte secreta"
 debug = DebugToolbarExtension(app)
 
