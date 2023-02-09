@@ -117,6 +117,12 @@ def delete_user(user_id):
     Delete the user with the given ID and redirect to /users (user list) page.
     """
 
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
+
+    return redirect("/users")
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=False)
