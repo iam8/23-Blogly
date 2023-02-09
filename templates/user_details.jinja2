@@ -15,11 +15,11 @@
     <h1>{{ user.first_name }} {{ user.last_name }}</h1>
     <img src="{{ user.image_url }}" alt="User profile image">
 
-    <form action="users/{{ user.id }}/edit" method="GET">
+    <form action="{{ user.id }}/edit" method="GET">
         <button>Edit</button>
     </form>
 
-    <form action="users/{{ user.id }}/delete" method="POST">
+    <form action="{{ user.id }}/delete" method="POST">
         <button>Delete</button>
     </form>
 
