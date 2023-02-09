@@ -25,7 +25,17 @@ with app.app_context():
 @app.route("/")
 def homepage():
     """
-    Blogly app homepage - shows list of current users and an 'add user' button.
+    Blogly app homepage.
+    Redirects to list of current users (/users).
+    """
+
+    return redirect("/users")
+
+
+@app.route("/users")
+def list_users():
+    """
+    Display list of current users and an 'add user' button.
     """
 
     users = User.query.all()
