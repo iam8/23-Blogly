@@ -39,6 +39,8 @@ class User(db.Model):
         Return the full name for this user.
         """
 
+        return f"{self.first_name} {self.last_name}"
+
     def __repr__(self):
         """
         String representation of this user: <User id, first_name, last_name>
