@@ -39,7 +39,7 @@ def list_users():
     """
 
     users = User.query.all()
-    return render_template("home.jinja2", users=users)
+    return render_template("list_users.jinja2", users=users)
 
 
 @app.route("/users/new")
