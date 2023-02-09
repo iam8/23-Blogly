@@ -7,7 +7,7 @@ Blogly application - Flask setup and routes.
 
 from flask import Flask, request, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User
+from models import db, connect_db, User, PLACEHOLDER_IMG
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -108,7 +108,7 @@ def edit_user(user_id):
     user = User.query.get_or_404(user_id)
     user.first_name = first_name
     user.last_name = last_name
-    user.image_url = image_url
+    user.image_url = image_url if image_url else PLACEHOLDER_IMG
 
     db.session.commit()
 
