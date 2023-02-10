@@ -30,6 +30,8 @@ def homepage():
     return redirect("/users")
 
 
+# USER-RELATED ROUTES -----------------------------------------------------------------------------
+
 @app.route("/users")
 def list_users():
     """
@@ -83,7 +85,7 @@ def display_user_details(user_id):
 
 
 @app.route("/users/<int:user_id>/edit")
-def display_edit_form(user_id):
+def display_user_edit_form(user_id):
     """
     Display the edit page for the user with the given ID.
     """
@@ -123,6 +125,57 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect("/users")
+
+# -------------------------------------------------------------------------------------------------
+
+
+# POST-RELATED ROUTES -----------------------------------------------------------------------------
+
+@app.route("/users/<int:user_id>/posts/new")
+def display_add_post_form(user_id):
+    """
+    Display form to create and add a new post for the given user.
+    """
+
+    return render_template("create_post.jinja2")
+
+
+@app.route("/users/<int:user_id>/posts/new", methods=["POST"])
+def add_post(user_id):
+    """
+    Add new post to Blogly app database for the given user and redirect to the details page for
+    that user.
+    """
+
+
+@app.route("/posts/<int:post_id>")
+def display_post_details(post_id):
+    """
+    Show information about the post with the given ID, and buttons to edit or delete that post.
+    """
+
+
+@app.route("/posts/<int:post_id>/edit")
+def display_post_edit_form(post_id):
+    """
+    Display the edit page for the post with the given ID.
+    """
+
+
+@app.route("/posts/<int:post_id>/edit", methods=["POST"])
+def edit_post(post_id):
+    """
+    Edit the post with the given ID and redirect to the details page for that post.
+    """
+
+
+@app.route("/posts/<int:post_id>/delete", methods=["POST"])
+def delete_post(post_id):
+    """
+    Delete the post with the given ID and redirect to /users (user list) page.
+    """
+
+# -------------------------------------------------------------------------------------------------
 
 
 if __name__ == "__main__":
