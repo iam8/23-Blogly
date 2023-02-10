@@ -10,17 +10,13 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, PLACEHOLDER_IMG
 
 app = Flask(__name__)
+debug = DebugToolbarExtension(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
 app.config['SQLALCHEMY_ECHO'] = True
 
-connect_db(app)
-
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 app.config["SECRET_KEY"] = "O secreta foarte secreta"
-debug = DebugToolbarExtension(app)
-
-with app.app_context():
-    db.create_all()
 
 
 @app.route("/")
@@ -129,4 +125,10 @@ def delete_user(user_id):
 
 
 if __name__ == "__main__":
+
+    connect_db(app)
+
+    with app.app_context():
+        db.create_all()
+
     app.run(host='0.0.0.0', port=5000, debug=True, threaded=False)
