@@ -17,6 +17,10 @@
         <i>By {{ user.get_full_name() }}</i>
     </div>
 
+    <form action="/users/{{ user.id }}" method="GET">
+        <button>Cancel</button>
+    </form>
+
     <form action="/posts/{{ post.id }}/edit" method="GET">
         <button>Edit</button>
     </form>
