@@ -39,4 +39,3 @@ if __name__ == "__main__":
 
         db.session.add_all([post_jane, post_jane2])
         db.session.commit()
-
