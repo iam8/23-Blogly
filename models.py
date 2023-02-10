@@ -71,3 +71,10 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     user = db.relationship("User", backref="posts")
+
+    def __repr__(self):
+        """
+        String representation of this post: <Post id, created_at, user_id>
+        """
+
+        return f"<Post {self.id} {self.created_at} {self.user_id}>"
