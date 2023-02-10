@@ -7,7 +7,7 @@ Blogly application - Flask setup and routes.
 
 from flask import Flask, request, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User, PLACEHOLDER_IMG
+from models import db, connect_db, User, Post, PLACEHOLDER_IMG
 
 app = Flask(__name__)
 
@@ -137,7 +137,8 @@ def display_add_post_form(user_id):
     Display form to create and add a new post for the given user.
     """
 
-    return render_template("create_post.jinja2")
+    user = User.query.get_or_404(user_id)
+    return render_template("create_post.jinja2", user=user)
 
 
 @app.route("/users/<int:user_id>/posts/new", methods=["POST"])
@@ -154,12 +155,26 @@ def display_post_details(post_id):
     Show information about the post with the given ID, and buttons to edit or delete that post.
     """
 
+    post = Post.query.get_or_404(post_id)
+
+    # TODO: get user object that has the post above
+    user = ""
+
+    return render_template("post_details.jinja2", user=user, post=post)
+
 
 @app.route("/posts/<int:post_id>/edit")
 def display_post_edit_form(post_id):
     """
     Display the edit page for the post with the given ID.
     """
+
+    post = Post.query.get_or_404(post_id)
+
+    # TODO: get user object that has the post above
+    user = ""
+
+    return render_template("edit_post.jinja2", user=user, post=post)
 
 
 @app.route("/posts/<int:post_id>/edit", methods=["POST"])
