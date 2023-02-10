@@ -23,6 +23,8 @@ def connect_db(app):
 class User(db.Model):
     """
     Class representing a user.
+
+    One user can have many posts.
     """
 
     __tablename__ = "users"
@@ -48,3 +50,22 @@ class User(db.Model):
         """
 
         return f"<User {self.id} {self.first_name} {self.last_name}>"
+
+
+class Post(db.Model):
+    """
+    Class representing a post made by a user.
+
+    One post can have only one user.
+    """
+
+    __tablename__ = "posts"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
