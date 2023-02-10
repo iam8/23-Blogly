@@ -156,9 +156,7 @@ def display_post_details(post_id):
     """
 
     post = Post.query.get_or_404(post_id)
-
-    # TODO: get user object that has the post above
-    user = ""
+    user = post.user
 
     return render_template("post_details.jinja2", user=user, post=post)
 
@@ -170,9 +168,7 @@ def display_post_edit_form(post_id):
     """
 
     post = Post.query.get_or_404(post_id)
-
-    # TODO: get user object that has the post above
-    user = ""
+    user = post.user
 
     return render_template("edit_post.jinja2", user=user, post=post)
 
