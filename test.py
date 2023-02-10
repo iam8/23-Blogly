@@ -124,6 +124,8 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
+            self.assertIn("<button>Edit</button>", html)
+            self.assertIn("<button>Delete</button>", html)
 
     def test_get_user_edit_form(self):
         """
@@ -138,6 +140,7 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Edit User</h1>", html)
             self.assertIn("<button>Save</button>", html)
+            self.assertIn("<button>Cancel</button>", html)
             self.assertRegex(html, '<form .* method="POST">')
 
     def test_add_new_user_redirect(self):
@@ -178,6 +181,7 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
             self.assertIn("<button>Add user</button>", html)
+            self.assertIn("Jane Doe", html)
 
     def test_edit_user_redirect(self):
         """
@@ -210,6 +214,36 @@ class FlaskTests(TestCase):
 
             resp = client.post(f"/users/{self.user0_id}/edit",
                                data=data,
+                               follow_redirects=True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Users</h1>", html)
+            self.assertIn("<button>Add user</button>", html)
+            self.assertIn("Jane Doe", html)
+
+    def test_delete_user_redirect(self):
+        """
+        Test that deleting a user results in a status code of 302 and redirects to the appropriate
+        location.
+        """
+
+        with app.test_client() as client:
+            resp = client.post(f"/users/{self.user0_id}/delete",
+                               follow_redirects=False)
+
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, "/users")
+
+    def test_delete_user_redirect_followed(self):
+        """
+        Test that deleting a user results in a status code of 200 and redirects to a page with
+        the appropriate content.
+        """
+
+        with app.test_client() as client:
+            resp = client.post(f"/users/{self.user0_id}/delete",
                                follow_redirects=True)
 
             html = resp.get_data(as_text=True)
