@@ -124,3 +124,18 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
+
+    def test_get_user_edit_form(self):
+        """
+        Test that GET '/users/<user_id>/edit for an existing user results in a status code of 200
+        and returns a page with the appropriate content.
+        """
+
+        with app.test_client() as client:
+            resp = client.get(f"/users/{self.user0_id}/edit")
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Edit User</h1>", html)
+            self.assertIn("<button>Save</button>", html)
+            self.assertRegex(html, '<form .* method="POST">')
