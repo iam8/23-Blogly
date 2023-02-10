@@ -139,3 +139,81 @@ class FlaskTests(TestCase):
             self.assertIn("<h1>Edit User</h1>", html)
             self.assertIn("<button>Save</button>", html)
             self.assertRegex(html, '<form .* method="POST">')
+
+    def test_add_new_user_redirect(self):
+        """
+        Test that adding a new user results in a status code of 302 and redirects to the correct
+        location.
+        """
+
+        with app.test_client() as client:
+            data = {"firstname": "Jane",
+                    "lastname": "Doe",
+                    "imageurl": "dummylink"}
+
+            resp = client.post("/users/new",
+                               data=data,
+                               follow_redirects=False)
+
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, "/users")
+
+    def test_add_new_user_redirect_followed(self):
+        """
+        Test that adding a new user results in a status code of 200 and redirects to a page with
+        the appropriate content.
+        """
+
+        with app.test_client() as client:
+            data = {"firstname": "Jane",
+                    "lastname": "Doe",
+                    "imageurl": "dummylink"}
+
+            resp = client.post("/users/new",
+                               data=data,
+                               follow_redirects=True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Users</h1>", html)
+            self.assertIn("<button>Add user</button>", html)
+
+    def test_edit_user_redirect(self):
+        """
+        Test that editing a user results in a status code of 302 and redirects to the correct
+        location.
+        """
+
+        with app.test_client() as client:
+            data = {"firstname": "Jane",
+                    "lastname": "Doe",
+                    "imageurl": "dummylink"}
+
+            resp = client.post(f"/users/{self.user0_id}/edit",
+                               data=data,
+                               follow_redirects=False)
+
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, "/users")
+
+    def test_edit_user_redirect_followed(self):
+        """
+        Test that editing a user results in a status code of 200 and redirects to a page with
+        the appropriate content.
+        """
+
+        with app.test_client() as client:
+            data = {"firstname": "Jane",
+                    "lastname": "Doe",
+                    "imageurl": "dummylink"}
+
+            resp = client.post(f"/users/{self.user0_id}/edit",
+                               data=data,
+                               follow_redirects=True)
+
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Users</h1>", html)
+            self.assertIn("<button>Add user</button>", html)
