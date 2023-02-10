@@ -7,7 +7,7 @@ Tests for Blogly application.
 
 from unittest import TestCase
 from app import app
-from models import db, connect_db, User, PLACEHOLDER_IMG
+from models import db, connect_db, User
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test_db"
 app.config['SQLALCHEMY_ECHO'] = False
