@@ -7,15 +7,56 @@ Tests for Blogly application.
 
 from unittest import TestCase
 from app import app
+from models import db, connect_db, User, PLACEHOLDER_IMG
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test_db"
+app.config['SQLALCHEMY_ECHO'] = False
 
 app.config['TESTING'] = True
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']
+
+connect_db(app)
+
+with app.app_context():
+    db.drop_all()
+    db.create_all()
 
 
 class FlaskTests(TestCase):
     """
     Flask integration tests - tests for view functions.
     """
+
+    def setUp(self) -> None:
+        """
+        Add sample user to test database.
+        """
+
+        with app.app_context():
+            User.query.delete()
+
+            user0 = User(first_name="first0", last_name="last0", image_url="nonexistent")
+            user1 = User(first_name="first1", last_name="last1")
+            user2 = User(first_name="first2", last_name="last2", image_url="nonexistent")
+
+            db.session.add_all([user0, user1, user2])
+            db.session.commit()
+
+            self.user0_id = user0.id
+            self.user1_id = user1.id
+            self.user2_id = user2.id
+
+        return super().setUp()
+
+    def tearDown(self) -> None:
+        """
+        Clean up any fouled transaction.
+        """
+
+        with app.app_context():
+            db.session.rollback()
+
+        return super().tearDown()
 
     def test_homepage_redirect(self):
         """
@@ -70,3 +111,16 @@ class FlaskTests(TestCase):
             self.assertIn("<h1>Create A New User</h1>", html)
             self.assertIn("<button>Add</button>", html)
             self.assertRegex(html, '<form .* method="POST">')
+
+    def test_get_user_details(self):
+        """
+        Test that GET '/users/<user_id> for an existing user results in a status code of 200 and
+        returns a page with the appropriate content.
+        """
+
+        with app.test_client() as client:
+            resp = client.get(f"/users/{self.user0_id}")
+            html = resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>first0 last0</h1>", html)
