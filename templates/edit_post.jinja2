@@ -4,3 +4,29 @@
 {# Form for editing an existing post for Blogly. #}
 
 {% extends "base.jinja2" %}
+
+
+{% block title %}
+    Edit Post
+{% endblock title %}
+
+{% block content %}
+
+    <h1>Edit Post</h1>
+
+    <form action="/posts/{{ post.id }}/edit" method="POST">
+
+        <label for="title">Title</label>
+        <input id="title" type="text" name="title" placeholder="Enter a title for your post">
+
+        <label for="content">Content</label>
+        <input id="content" type="text" name="content" placeholder="Enter post content">
+
+        <button>Save</button>
+    </form>
+
+    <form action="/users/{{ user.id }}" method="GET">
+        <button>Cancel</button>
+    </form>
+
+{% endblock content %}
