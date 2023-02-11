@@ -140,6 +140,7 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
             self.assertIn("<h2>Posts</h2>", html)
+            self.assertIn("<button>Add new post</button>", html)
             self.assertIn("<button>Edit</button>", html)
             self.assertIn("<button>Delete</button>", html)
 
@@ -428,6 +429,7 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
             self.assertIn("<h2>Posts</h2>", html)
+            self.assertIn("<button>Add new post</button>", html)
             self.assertIn("<button>Edit</button>", html)
             self.assertIn("<button>Delete</button>", html)
 
