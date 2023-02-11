@@ -17,6 +17,9 @@
     <div>
         <i>By {{ user.get_full_name() }}</i>
     </div>
+    <div>
+        <span>{{ post.get_formatted_datetime() }}</span>
+    </div>
 
     <form action="/users/{{ user.id }}" method="GET">
         <button>User details</button>
