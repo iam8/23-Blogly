@@ -148,6 +148,17 @@ def add_post(user_id):
     that user.
     """
 
+    title = request.form["title"]
+    content = request.form["content"]
+
+    user = User.query.get(user_id)
+    post = Post(title=title, content=content, user_id=user.id)
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect(f"/users/{user.id}")
+
 
 @app.route("/posts/<int:post_id>")
 def display_post_details(post_id):
