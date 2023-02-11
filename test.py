@@ -139,6 +139,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
+            self.assertIn("<h2>Posts</h2>", html)
             self.assertIn("<button>Edit</button>", html)
             self.assertIn("<button>Delete</button>", html)
 
@@ -269,22 +270,7 @@ class FlaskTests(TestCase):
 
 # -------------------------------------------------------------------------------------------------
 
-
 # POST-RELATED TESTS ------------------------------------------------------------------------------
-
-    # def test_get_user_list(self):
-    #     """
-    #     Test that GET '/users' results in a status code of 200 and returns a page with the
-    #     appropriate content.
-    #     """
-
-    #     with app.test_client() as client:
-    #         resp = client.get("/users")
-    #         html = resp.get_data(as_text=True)
-
-    #         self.assertEqual(resp.status_code, 200)
-    #         self.assertIn("<h1>Users</h1>", html)
-    #         self.assertIn("<button>Add user</button>", html)
 
     def test_get_new_post_form(self):
         """
@@ -292,14 +278,14 @@ class FlaskTests(TestCase):
         page with the appropriate content.
         """
 
-        # with app.test_client() as client:
-        #     resp = client.get("/users/new")
-        #     html = resp.get_data(as_text=True)
+        with app.test_client() as client:
+            resp = client.get(f"/users/{self.user0_id}/posts/new")
+            html = resp.get_data(as_text=True)
 
-        #     self.assertEqual(resp.status_code, 200)
-        #     self.assertIn("<h1>Create A New User</h1>", html)
-        #     self.assertIn("<button>Add</button>", html)
-        #     self.assertRegex(html, '<form .* method="POST">')
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Create A New Post for first0 last0</h1>", html)
+            self.assertIn("<button>Add</button>", html)
+            self.assertRegex(html, '<form .* method="POST">')
 
     def test_get_post_details(self):
         """
@@ -307,14 +293,16 @@ class FlaskTests(TestCase):
         returns a page with the appropriate content.
         """
 
-        # with app.test_client() as client:
-        #     resp = client.get(f"/users/{self.user0_id}")
-        #     html = resp.get_data(as_text=True)
+        with app.test_client() as client:
+            resp = client.get(f"/posts/{self.post0_id}")
+            html = resp.get_data(as_text=True)
 
-        #     self.assertEqual(resp.status_code, 200)
-        #     self.assertIn("<h1>first0 last0</h1>", html)
-        #     self.assertIn("<button>Edit</button>", html)
-        #     self.assertIn("<button>Delete</button>", html)
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Test post 0</h1>", html)
+            self.assertIn("<p>Test content 0</p>", html)
+            self.assertIn("<button>User details</button>", html)
+            self.assertIn("<button>Edit</button>", html)
+            self.assertIn("<button>Delete</button>", html)
 
     def test_get_post_edit_form(self):
         """
@@ -322,15 +310,15 @@ class FlaskTests(TestCase):
         and returns a page with the appropriate content.
         """
 
-        # with app.test_client() as client:
-        #     resp = client.get(f"/users/{self.user0_id}/edit")
-        #     html = resp.get_data(as_text=True)
+        with app.test_client() as client:
+            resp = client.get(f"/posts/{self.post0_id}/edit")
+            html = resp.get_data(as_text=True)
 
-        #     self.assertEqual(resp.status_code, 200)
-        #     self.assertIn("<h1>Edit User</h1>", html)
-        #     self.assertIn("<button>Save</button>", html)
-        #     self.assertIn("<button>Cancel</button>", html)
-        #     self.assertRegex(html, '<form .* method="POST">')
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Edit Post</h1>", html)
+            self.assertIn("<button>Save</button>", html)
+            self.assertIn("<button>Cancel</button>", html)
+            self.assertRegex(html, '<form .* method="POST">')
 
     def test_add_new_post_redirect(self):
         """
@@ -338,17 +326,16 @@ class FlaskTests(TestCase):
         location.
         """
 
-        # with app.test_client() as client:
-        #     data = {"firstname": "Jane",
-        #             "lastname": "Doe",
-        #             "imageurl": "dummylink"}
+        with app.test_client() as client:
+            data = {"title": "NEW TEST POST",
+                    "content": "NEW TEST CONTENT"}
 
-        #     resp = client.post("/users/new",
-        #                        data=data,
-        #                        follow_redirects=False)
+            resp = client.post(f"/users/{self.user0_id}/posts/new",
+                               data=data,
+                               follow_redirects=False)
 
-        #     self.assertEqual(resp.status_code, 302)
-        #     self.assertEqual(resp.location, "/users")
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, f"/users/{self.user0_id}")
 
     def test_add_new_post_redirect_followed(self):
         """
@@ -356,21 +343,19 @@ class FlaskTests(TestCase):
         the appropriate content.
         """
 
-        # with app.test_client() as client:
-        #     data = {"firstname": "Jane",
-        #             "lastname": "Doe",
-        #             "imageurl": "dummylink"}
+        with app.test_client() as client:
+            data = {"title": "NEW TEST POST",
+                    "content": "NEW TEST CONTENT"}
 
-        #     resp = client.post("/users/new",
-        #                        data=data,
-        #                        follow_redirects=True)
+            resp = client.post(f"/users/{self.user0_id}/posts/new",
+                               data=data,
+                               follow_redirects=True)
 
-        #     html = resp.get_data(as_text=True)
+            html = resp.get_data(as_text=True)
 
-        #     self.assertEqual(resp.status_code, 200)
-        #     self.assertIn("<h1>Users</h1>", html)
-        #     self.assertIn("<button>Add user</button>", html)
-        #     self.assertIn("Jane Doe", html)
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>Users</h1>", html)
+            self.assertIn("<button>Add user</button>", html)
 
     def test_edit_post_redirect(self):
         """
@@ -378,17 +363,16 @@ class FlaskTests(TestCase):
         location.
         """
 
-        # with app.test_client() as client:
-        #     data = {"firstname": "Jane",
-        #             "lastname": "Doe",
-        #             "imageurl": "dummylink"}
+        with app.test_client() as client:
+            data = {"title": "NEW TEST POST",
+                    "content": "NEW TEST CONTENT"}
 
-        #     resp = client.post(f"/users/{self.user0_id}/edit",
-        #                        data=data,
-        #                        follow_redirects=False)
+            resp = client.post(f"/posts/{self.post0_id}/edit",
+                               data=data,
+                               follow_redirects=False)
 
-        #     self.assertEqual(resp.status_code, 302)
-        #     self.assertEqual(resp.location, "/users")
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, f"/posts/{self.post0_id}")
 
     def test_edit_post_redirect_followed(self):
         """
@@ -396,21 +380,22 @@ class FlaskTests(TestCase):
         the appropriate content.
         """
 
-        # with app.test_client() as client:
-        #     data = {"firstname": "Jane",
-        #             "lastname": "Doe",
-        #             "imageurl": "dummylink"}
+        with app.test_client() as client:
+            data = {"title": "NEW TEST POST",
+                    "content": "NEW TEST CONTENT"}
 
-        #     resp = client.post(f"/users/{self.user0_id}/edit",
-        #                        data=data,
-        #                        follow_redirects=True)
+            resp = client.post(f"/posts/{self.post0_id}/edit",
+                               data=data,
+                               follow_redirects=False)
 
-        #     html = resp.get_data(as_text=True)
+            html = resp.get_data(as_text=True)
 
-        #     self.assertEqual(resp.status_code, 200)
-        #     self.assertIn("<h1>Users</h1>", html)
-        #     self.assertIn("<button>Add user</button>", html)
-        #     self.assertIn("Jane Doe", html)
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>NEW TEST POST</h1>", html)
+            self.assertIn("<p>NEW TEST CONTENT</p>", html)
+            self.assertIn("<button>User details</button>", html)
+            self.assertIn("<button>Edit</button>", html)
+            self.assertIn("<button>Delete</button>", html)
 
     def test_delete_post_redirect(self):
         """
@@ -418,12 +403,12 @@ class FlaskTests(TestCase):
         location.
         """
 
-        # with app.test_client() as client:
-        #     resp = client.post(f"/users/{self.user0_id}/delete",
-        #                        follow_redirects=False)
+        with app.test_client() as client:
+            resp = client.post(f"/posts/{self.post0_id}/delete",
+                               follow_redirects=False)
 
-        #     self.assertEqual(resp.status_code, 302)
-        #     self.assertEqual(resp.location, "/users")
+            self.assertEqual(resp.status_code, 302)
+            self.assertEqual(resp.location, f"/users/{self.user0_id}")
 
     def test_delete_post_redirect_followed(self):
         """
@@ -431,14 +416,16 @@ class FlaskTests(TestCase):
         the appropriate content.
         """
 
-        # with app.test_client() as client:
-        #     resp = client.post(f"/users/{self.user0_id}/delete",
-        #                        follow_redirects=True)
+        with app.test_client() as client:
+            resp = client.post(f"/posts/{self.post0_id}/delete",
+                               follow_redirects=True)
 
-        #     html = resp.get_data(as_text=True)
+            html = resp.get_data(as_text=True)
 
-        #     self.assertEqual(resp.status_code, 200)
-        #     self.assertIn("<h1>Users</h1>", html)
-        #     self.assertIn("<button>Add user</button>", html)
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("<h1>first0 last0</h1>", html)
+            self.assertIn("<h2>Posts</h2>", html)
+            self.assertIn("<button>Edit</button>", html)
+            self.assertIn("<button>Delete</button>", html)
 
 # -------------------------------------------------------------------------------------------------
