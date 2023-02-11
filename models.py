@@ -37,6 +37,8 @@ class User(db.Model):
     last_name = db.Column(db.String(30), nullable=False)
     image_url = db.Column(db.Text, server_default=PLACEHOLDER_IMG)
 
+    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
+
     def get_full_name(self):
         """
         Return the full name for this user.
@@ -69,8 +71,6 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-
-    user = db.relationship("User", backref="posts")
 
     def __repr__(self):
         """
