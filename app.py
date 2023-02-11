@@ -81,7 +81,8 @@ def display_user_details(user_id):
     """
 
     user = User.query.get_or_404(user_id)
-    return render_template("user_details.jinja2", user=user)
+    posts = user.posts
+    return render_template("user_details.jinja2", user=user, posts=posts)
 
 
 @app.route("/users/<int:user_id>/edit")
