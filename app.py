@@ -208,6 +208,12 @@ def delete_post(post_id):
     Delete the post with the given ID and redirect to /users (user list) page.
     """
 
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect("/users")
+
 # -------------------------------------------------------------------------------------------------
 
 
