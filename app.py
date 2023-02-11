@@ -190,6 +190,17 @@ def edit_post(post_id):
     Edit the post with the given ID and redirect to the details page for that post.
     """
 
+    title = request.form["title"]
+    content = request.form["content"]
+
+    post = Post.query.get_or_404(post_id)
+    post.title = title
+    post.content = content
+
+    db.session.commit()
+
+    return redirect(f"/posts/{post_id}")
+
 
 @app.route("/posts/<int:post_id>/delete", methods=["POST"])
 def delete_post(post_id):
