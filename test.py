@@ -7,7 +7,7 @@ Tests for Blogly application.
 
 from unittest import TestCase
 from app import app
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test_db"
 app.config['SQLALCHEMY_ECHO'] = False
@@ -29,22 +29,30 @@ class FlaskTests(TestCase):
 
     def setUp(self) -> None:
         """
-        Add sample user to test database.
+        Add sample users and posts to test database.
         """
 
         with app.app_context():
             User.query.delete()
+            Post.query.delete()
 
-            user0 = User(first_name="first0", last_name="last0", image_url="nonexistent")
-            user1 = User(first_name="first1", last_name="last1")
-            user2 = User(first_name="first2", last_name="last2", image_url="nonexistent")
+            user0 = User(first_name="first0", last_name="last0")
 
-            db.session.add_all([user0, user1, user2])
+            db.session.add(user0)
             db.session.commit()
 
             self.user0_id = user0.id
-            self.user1_id = user1.id
-            self.user2_id = user2.id
+
+            post0 = Post(title="Test post 0", content="Test 0 content", user_id=user0.id)
+            post1 = Post(title="Test post 1", content="Test 1 content", user_id=user0.id)
+            post2 = Post(title="Test post 2", content="Test 2 content", user_id=user0.id)
+
+            db.session.add_all([post0, post1, post2])
+            db.session.commit()
+
+            self.post0_id = post0.id
+            self.post1_id = post1.id
+            self.post2_id = post2.id
 
         return super().setUp()
 
@@ -82,6 +90,8 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
             self.assertIn("<button>Add user</button>", html)
+
+# USER-RELATED TESTS ------------------------------------------------------------------------------
 
     def test_get_user_list(self):
         """
@@ -251,3 +261,8 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
             self.assertIn("<button>Add user</button>", html)
+
+# -------------------------------------------------------------------------------------------------
+
+
+# POST-RELATED TESTS ------------------------------------------------------------------------------
