@@ -22,6 +22,10 @@
         </li>
     {% endfor %}
 
+    <form action="/users/{{ user.id }}/posts/new" method="GET">
+        <button>Add new post</button>
+    </form>
+
     <form action="/users/{{ user.id }}/edit" method="GET">
         <button>Edit</button>
     </form>
