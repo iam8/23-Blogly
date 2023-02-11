@@ -206,14 +206,15 @@ def edit_post(post_id):
 @app.route("/posts/<int:post_id>/delete", methods=["POST"])
 def delete_post(post_id):
     """
-    Delete the post with the given ID and redirect to /users (user list) page.
+    Delete the post with the given ID and redirect to the details page of the corresponding user.
     """
 
     post = Post.query.get_or_404(post_id)
+    user = post.user
     db.session.delete(post)
     db.session.commit()
 
-    return redirect("/users")
+    return redirect(f"/users/{user.id}")
 
 # -------------------------------------------------------------------------------------------------
 
