@@ -72,6 +72,13 @@ class Post(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
+    def get_formatted_datetime(self):
+        """
+        Return a string representing a nicer-formatted 'created at' date and time for this post.
+        """
+
+        return self.created_at.strftime("%b %d %Y, @%H:%M")
+
     def __repr__(self):
         """
         String representation of this post: <Post id, created_at, user_id>
