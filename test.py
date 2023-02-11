@@ -299,7 +299,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Test post 0</h1>", html)
-            self.assertIn("<p>Test content 0</p>", html)
+            self.assertIn("<p>Test 0 content</p>", html)
             self.assertIn("<button>User details</button>", html)
             self.assertIn("<button>Edit</button>", html)
             self.assertIn("<button>Delete</button>", html)
@@ -354,8 +354,11 @@ class FlaskTests(TestCase):
             html = resp.get_data(as_text=True)
 
             self.assertEqual(resp.status_code, 200)
-            self.assertIn("<h1>Users</h1>", html)
-            self.assertIn("<button>Add user</button>", html)
+            self.assertIn("<h1>first0 last0</h1>", html)
+            self.assertIn("<h2>Posts</h2>", html)
+            self.assertIn("NEW TEST POST", html)
+            self.assertIn("<button>Edit</button>", html)
+            self.assertIn("<button>Delete</button>", html)
 
     def test_edit_post_redirect(self):
         """
@@ -386,7 +389,7 @@ class FlaskTests(TestCase):
 
             resp = client.post(f"/posts/{self.post0_id}/edit",
                                data=data,
-                               follow_redirects=False)
+                               follow_redirects=True)
 
             html = resp.get_data(as_text=True)
 
