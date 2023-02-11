@@ -33,8 +33,9 @@ class FlaskTests(TestCase):
         """
 
         with app.app_context():
-            User.query.delete()
+
             Post.query.delete()
+            User.query.delete()
 
             user0 = User(first_name="first0", last_name="last0")
 
