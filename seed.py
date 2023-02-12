@@ -39,3 +39,5 @@ if __name__ == "__main__":
 
         db.session.add_all([post_jane, post_jane2])
         db.session.commit()
+
+        # TODO: Create some tags and join some of them to posts with PostTag
