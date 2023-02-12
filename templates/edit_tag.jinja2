@@ -4,3 +4,26 @@
 {# Form for editing a tag for Blogly. #}
 
 {% extends "base.jinja2" %}
+
+
+{% block title %}
+    Edit Tag
+{% endblock title %}
+
+{% block content %}
+
+    <h1>Edit Tag</h1>
+
+    <form action="/tags/{{ tag.id }}/edit" method="POST">
+
+        <label for="tagname">Name</label>
+        <input id="tagname" type="text" name="tagname" placeholder="Enter a name for the tag">
+
+        <button>Save</button>
+    </form>
+
+    <form action="/tags/{{ tag.id }}" method="GET">
+        <button>Cancel</button>
+    </form>
+
+{% endblock content %}

@@ -4,3 +4,24 @@
 {# List all tags - Blogly. #}
 
 {% extends "base.jinja2" %}
+
+
+{% block title %}
+    All Tags
+{% endblock title %}
+
+{% block content %}
+
+    <h1>Tags</h1>
+
+    {% for tag in tags %}
+        <li>
+            <a href="/tags/{{ tag.id }}">{{ tag.name }}</a>
+        </li>
+    {% endfor %}
+
+    <form action="/tags/new", method="GET">
+        <button>Add tag</button>
+    </form>
+
+{% endblock content %}
