@@ -219,6 +219,59 @@ def delete_post(post_id):
 # -------------------------------------------------------------------------------------------------
 
 
+# TAG-RELATED ROUTES -----------------------------------------------------------------------------
+
+@app.route("/tags")
+def list_tags():
+    """
+    Display list of current tags and an 'add tag' button.
+    """
+
+
+@app.route("/tags/<int:tag_id>")
+def display_tag_details(tag_id):
+    """
+    Show info about the tag with the given ID, and buttons to edit or delete that tag.
+    """
+
+
+@app.route("/tags/new")
+def display_add_tag_form():
+    """
+    Display form to create and add a new tag.
+    """
+
+
+@app.route("/tags/new", methods=["POST"])
+def add_tag():
+    """
+    Add new tag to Blogly app database and redirect to tag list.
+    """
+
+
+@app.route("/tags/<int:tag_id>/edit")
+def display_tag_edit_form(tag_id):
+    """
+    Display the edit form for the tag with the given ID.
+    """
+
+
+@app.route("/tags/<int:tag_id>/edit", methods=["POST"])
+def edit_tag(tag_id):
+    """
+    Edit the tag with the given ID and redirect to the tag list.
+    """
+
+
+@app.route("/tags/<int:tag_id>/delete", methods=["POST"])
+def delete_tag(tag_id):
+    """
+    Delete the tag with the given ID and redirect to the tag list.
+    """
+
+
+# -------------------------------------------------------------------------------------------------
+
 if __name__ == "__main__":
 
     connect_db(app)
