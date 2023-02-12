@@ -21,6 +21,15 @@
         <span>{{ post.get_formatted_datetime() }}</span>
     </div>
 
+    <div>
+        <b>Tags:</b>
+        {% for tag in tags %}
+            <span>
+                <a href="/tags/{{ tag.id }}">{{ tag.name }}</a>
+            </span>
+        {% endfor %}
+    </div>
+
     <form action="/users/{{ user.id }}" method="GET">
         <button>User details</button>
     </form>
