@@ -7,7 +7,7 @@ Blogly application - Flask setup and routes.
 
 from flask import Flask, request, redirect, render_template
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User, Post, PLACEHOLDER_IMG
+from models import db, connect_db, User, Post, Tag, PLACEHOLDER_IMG
 
 app = Flask(__name__)
 
@@ -139,7 +139,8 @@ def display_add_post_form(user_id):
     """
 
     user = User.query.get_or_404(user_id)
-    return render_template("create_post.jinja2", user=user)
+    tags = Tag.query.all()
+    return render_template("create_post.jinja2", user=user, tags=tags)
 
 
 @app.route("/users/<int:user_id>/posts/new", methods=["POST"])
@@ -169,8 +170,9 @@ def display_post_details(post_id):
 
     post = Post.query.get_or_404(post_id)
     user = post.user
+    tags = post.tags
 
-    return render_template("post_details.jinja2", user=user, post=post)
+    return render_template("post_details.jinja2", user=user, post=post, tags=tags)
 
 
 @app.route("/posts/<int:post_id>/edit")
@@ -181,8 +183,9 @@ def display_post_edit_form(post_id):
 
     post = Post.query.get_or_404(post_id)
     user = post.user
+    tags = Tag.query.all()
 
-    return render_template("edit_post.jinja2", user=user, post=post)
+    return render_template("edit_post.jinja2", user=user, post=post, tags=tags)
 
 
 @app.route("/posts/<int:post_id>/edit", methods=["POST"])
@@ -226,6 +229,9 @@ def list_tags():
     """
     Display list of current tags and an 'add tag' button.
     """
+
+    tags = Tag.query.all()
+    return render_template("list_tags.jinja2", tags=tags)
 
 
 @app.route("/tags/<int:tag_id>")
