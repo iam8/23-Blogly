@@ -102,6 +102,10 @@ class Tag(db.Model):
 
     name = db.Column(db.String(30), unique=True, nullable=False)
 
+    posts = db.relationship("Post",
+                            secondary="posts_tags",
+                            backref="tags")
+
 
 class PostTag(db.Model):
     """
@@ -110,7 +114,7 @@ class PostTag(db.Model):
     Contains foreign keys for Post IDs and Tag IDs.
     """
 
-    __tablename__ = "posttags"
+    __tablename__ = "posts_tags"
 
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"), primary_key=True)
     tag_id = db.Column(db.Integer, db.ForeignKey("tag.id"), primary_key=True)
