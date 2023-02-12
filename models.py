@@ -85,3 +85,32 @@ class Post(db.Model):
         """
 
         return f"<Post {self.id} {self.created_at} {self.user_id}>"
+
+
+class Tag(db.Model):
+    """
+    Class representing a tag for a post.
+
+    One tag can have many posts, and one post can have many tags.
+    """
+
+    __tablename__ = "tags"
+
+    id = db.Column(db.Integer,
+                   primary_key=True,
+                   autoincrement=True)
+
+    name = db.Column(db.String(30), unique=True, nullable=False)
+
+
+class PostTag(db.Model):
+    """
+    Class representing the joining of a Post and a Tag.
+
+    Contains foreign keys for Post IDs and Tag IDs.
+    """
+
+    __tablename__ = "posttags"
+
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey("tag.id"), primary_key=True)
