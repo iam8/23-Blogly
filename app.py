@@ -152,6 +152,8 @@ def add_post(user_id):
 
     title = request.form["title"]
     content = request.form["content"]
+    tags = request.form.getlist("tag")
+    print(tags)
 
     user = User.query.get(user_id)
     post = Post(title=title, content=content, user_id=user.id)
@@ -261,6 +263,14 @@ def add_tag():
     Add new tag to Blogly app database and redirect to tag list.
     """
 
+    name = request.form["tagname"]
+    tag = Tag(name=name)
+
+    db.session.add(tag)
+    db.session.commit()
+
+    return redirect("/tags")
+
 
 @app.route("/tags/<int:tag_id>/edit")
 def display_tag_edit_form(tag_id):
@@ -278,12 +288,28 @@ def edit_tag(tag_id):
     Edit the tag with the given ID and redirect to the tag list.
     """
 
+    name = request.form["tagname"]
+
+    tag = Tag.query.get_or_404(tag_id)
+    tag.name = name
+
+    db.session.commit()
+
+    return redirect("/tags")
+
 
 @app.route("/tags/<int:tag_id>/delete", methods=["POST"])
 def delete_tag(tag_id):
     """
     Delete the tag with the given ID and redirect to the tag list.
     """
+
+    tag = Tag.query.get_or_404(tag_id)
+
+    db.session.delete(tag)
+    db.session.commit()
+
+    return redirect("/tags")
 
 
 # -------------------------------------------------------------------------------------------------
