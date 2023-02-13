@@ -2,6 +2,8 @@
 # Unit 23 Exercise - Blogly App
 
 # TODO: write tests for tag routes, most importantly the POST routes
+# TODO: for all templates that have multiple submit buttons - use 'formaction' and make into a
+# single form (not a separate form for each button).
 
 """
 Tests for Blogly application.
