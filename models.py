@@ -48,7 +48,7 @@ class User(db.Model):
 
     def __repr__(self):
         """
-        String representation of this user: <User id, first_name, last_name>
+        Return a string representation of this user: <User id, first_name, last_name>
         """
 
         return f"<User {self.id} {self.first_name} {self.last_name}>"
@@ -81,7 +81,7 @@ class Post(db.Model):
 
     def __repr__(self):
         """
-        String representation of this post: <Post id, created_at, user_id>
+        Return a string representation of this post: <Post id, created_at, user_id>
         """
 
         return f"<Post {self.id} {self.created_at} {self.user_id}>"
@@ -105,6 +105,13 @@ class Tag(db.Model):
     posts = db.relationship("Post",
                             secondary="posts_tags",
                             backref="tags")
+
+    def __repr__(self):
+        """
+        Return a string representation of this tag: <Tag id, name>
+        """
+
+        return f"<Tag {self.id} {self.name}>"
 
 
 class PostTag(db.Model):
