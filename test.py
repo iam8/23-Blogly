@@ -7,7 +7,7 @@ Tests for Blogly application.
 
 from unittest import TestCase
 from app import app
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag, PostTag
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///blogly_test_db"
 app.config['SQLALCHEMY_ECHO'] = False
@@ -34,9 +34,12 @@ class FlaskTests(TestCase):
 
         with app.app_context():
 
+            PostTag.query.delete()
+            Tag.query.delete()
             Post.query.delete()
             User.query.delete()
 
+            # Create test user
             user0 = User(first_name="first0", last_name="last0")
 
             db.session.add(user0)
@@ -44,6 +47,7 @@ class FlaskTests(TestCase):
 
             self.user0_id = user0.id
 
+            # Create test posts
             post0 = Post(title="Test post 0", content="Test 0 content", user_id=user0.id)
             post1 = Post(title="Test post 1", content="Test 1 content", user_id=user0.id)
             post2 = Post(title="Test post 2", content="Test 2 content", user_id=user0.id)
@@ -54,6 +58,21 @@ class FlaskTests(TestCase):
             self.post0_id = post0.id
             self.post1_id = post1.id
             self.post2_id = post2.id
+
+            # Create test tags and associate with some posts
+            tag1 = Tag(name="Tag1")
+            tag2 = Tag(name="Tag2")
+            tag3 = Tag(name="Tag3")
+
+            db.session.add_all([tag1, tag2, tag3])
+            db.session.commit()
+
+            posttag1 = PostTag(post_id=post0.id, tag_id=tag1.id)
+            posttag2 = PostTag(post_id=post0.id, tag_id=tag2.id)
+            posttag3 = PostTag(post_id=post1.id, tag_id=tag3.id)
+
+            db.session.add_all([posttag1, posttag2, posttag3])
+            db.session.commit()
 
         return super().setUp()
 
@@ -285,6 +304,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Create A New Post for first0 last0</h1>", html)
+            self.assertIn("Add tags", html)
             self.assertIn("<button>Add</button>", html)
             self.assertRegex(html, '<form .* method="POST">')
 
