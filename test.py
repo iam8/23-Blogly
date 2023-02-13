@@ -163,9 +163,9 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
             self.assertIn("<h2>Posts</h2>", html)
-            self.assertIn("<button>Add new post</button>", html)
-            self.assertIn("<button>Edit</button>", html)
-            self.assertIn("<button>Delete</button>", html)
+            self.assertIn(">Add new post</button>", html)
+            self.assertIn(">Edit</button>", html)
+            self.assertIn(">Delete</button>", html)
 
     def test_get_user_edit_form(self):
         """
@@ -383,8 +383,8 @@ class FlaskTests(TestCase):
             self.assertIn("<h1>first0 last0</h1>", html)
             self.assertIn("<h2>Posts</h2>", html)
             self.assertIn("NEW TEST POST", html)
-            self.assertIn("<button>Edit</button>", html)
-            self.assertIn("<button>Delete</button>", html)
+            self.assertIn(">Edit</button>", html)
+            self.assertIn(">Delete</button>", html)
 
     def test_edit_post_redirect(self):
         """
@@ -454,8 +454,8 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
             self.assertIn("<h2>Posts</h2>", html)
-            self.assertIn("<button>Add new post</button>", html)
-            self.assertIn("<button>Edit</button>", html)
-            self.assertIn("<button>Delete</button>", html)
+            self.assertIn(">Add new post</button>", html)
+            self.assertIn(">Edit</button>", html)
+            self.assertIn(">Delete</button>", html)
 
 # -------------------------------------------------------------------------------------------------
