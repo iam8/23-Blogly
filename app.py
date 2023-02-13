@@ -240,12 +240,19 @@ def display_tag_details(tag_id):
     Show info about the tag with the given ID, and buttons to edit or delete that tag.
     """
 
+    tag = Tag.query.get(tag_id)
+    posts = tag.posts
+
+    return render_template("tag_details.jinja2", posts=posts, tag=tag)
+
 
 @app.route("/tags/new")
 def display_add_tag_form():
     """
     Display form to create and add a new tag.
     """
+
+    return render_template("create_tag.jinja2", )
 
 
 @app.route("/tags/new", methods=["POST"])
@@ -260,6 +267,9 @@ def display_tag_edit_form(tag_id):
     """
     Display the edit form for the tag with the given ID.
     """
+
+    tag = Tag.query.get(tag_id)
+    return render_template("edit_tag.jinja2", tag=tag)
 
 
 @app.route("/tags/<int:tag_id>/edit", methods=["POST"])
