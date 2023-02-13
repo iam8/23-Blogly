@@ -206,7 +206,7 @@ def edit_post(post_id):
     post = Post.query.get_or_404(post_id)
     post.title = title
     post.content = content
-    post.tags.clear()  # Fix this line - something like this
+    post.tags.clear()
 
     for tag_id in tag_ids:
         tag = Tag.query.get(tag_id)
