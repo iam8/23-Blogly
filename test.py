@@ -337,6 +337,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Edit Post</h1>", html)
+            self.assertIn("Add tags", html)
             self.assertIn("<button>Save</button>", html)
             self.assertIn("<button>Cancel</button>", html)
             self.assertRegex(html, '<form .* method="POST">')
