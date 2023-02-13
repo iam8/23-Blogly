@@ -13,7 +13,7 @@
 {% block content %}
 
     <h1>{{ user.get_full_name() }}</h1>
-    <img src="{{ user.image_url }}" alt="User profile image">
+    <img src="{{ user.image_url }}" alt="{{ user.get_full_name() }}" class="img-fluid">
 
     <h2>Posts</h2>
     {% for post in posts %}
@@ -23,15 +23,15 @@
     {% endfor %}
 
     <form action="/users/{{ user.id }}/posts/new" method="GET">
-        <button>Add new post</button>
+        <button class="btn btn-primary btn-sml">Add new post</button>
     </form>
 
     <form action="/users/{{ user.id }}/edit" method="GET">
-        <button>Edit</button>
+        <button class="btn btn-primary btn-sml">Edit</button>
     </form>
 
     <form action="/users/{{ user.id }}/delete" method="POST">
-        <button>Delete</button>
+        <button class="btn btn-danger btn-sml">Delete</button>
     </form>
 
 {% endblock content %}
