@@ -1,6 +1,8 @@
 # Ioana A Mititean
 # Unit 23 Exercise - Blogly App
 
+# TODO: write tests for tag routes, most importantly the POST routes
+
 """
 Tests for Blogly application.
 """
