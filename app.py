@@ -152,14 +152,16 @@ def add_post(user_id):
 
     title = request.form["title"]
     content = request.form["content"]
-    tag_ids = request.form.getlist("tag")
+    # tag_ids = request.form.getlist("tag")
+    tag_ids = [int(num) for num in request.form.getlist("tag")]
+    tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
 
-    user = User.query.get(user_id)
-    post = Post(title=title, content=content, user_id=user.id)
+    user = User.query.get_or_404(user_id)
+    post = Post(title=title, content=content, user=user, tags=tags)
 
-    for tag_id in tag_ids:
-        tag = Tag.query.get(tag_id)
-        post.tags.append(tag)
+    # for tag_id in tag_ids:
+    #     tag = Tag.query.get(tag_id)
+    #     post.tags.append(tag)
 
     db.session.add(post)
     db.session.commit()
@@ -201,16 +203,19 @@ def edit_post(post_id):
 
     title = request.form["title"]
     content = request.form["content"]
-    tag_ids = request.form.getlist("tag")
+    # tag_ids = request.form.getlist("tag")
+    tag_ids = [int(num) for num in request.form.getlist("tag")]
+    tags = Tag.query.filter(Tag.id.in_(tag_ids)).all()
 
     post = Post.query.get_or_404(post_id)
     post.title = title
     post.content = content
-    post.tags.clear()
+    post.tags = tags
+    # post.tags.clear()
 
-    for tag_id in tag_ids:
-        tag = Tag.query.get(tag_id)
-        post.tags.append(tag)
+    # for tag_id in tag_ids:
+    #     tag = Tag.query.get(tag_id)
+    #     post.tags.append(tag)
 
     db.session.commit()
 
