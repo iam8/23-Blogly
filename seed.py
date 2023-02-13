@@ -5,7 +5,7 @@
 Seed file for Blogly app - add 3 initial users and some posts into database.
 """
 
-from models import User, Post, db
+from models import User, Post, Tag, PostTag, db
 from app import app, connect_db
 
 if __name__ == "__main__":
@@ -40,4 +40,17 @@ if __name__ == "__main__":
         db.session.add_all([post_jane, post_jane2])
         db.session.commit()
 
-        # TODO: Create some tags and join some of them to posts with PostTag
+        # Create some tags and connect them to some posts
+        tag1 = Tag(name="Tag1")
+        tag2 = Tag(name="Tag2")
+        tag3 = Tag(name="Tag3")
+
+        db.session.add_all([tag1, tag2, tag3])
+        db.session.commit()
+
+        posttag1 = PostTag(post_id=post_jane.id, tag_id=tag1.id)
+        posttag2 = PostTag(post_id=post_jane.id, tag_id=tag2.id)
+        posttag3 = PostTag(post_id=post_jane2.id, tag_id=tag3.id)
+
+        db.session.add_all([posttag1, posttag2, posttag3])
+        db.session.commit()
