@@ -15,7 +15,7 @@ app.config["SECRET_KEY"] = "O secreta foarte secreta"
 debug = DebugToolbarExtension(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
-app.config['SQLALCHEMY_ECHO'] = True
+# app.config['SQLALCHEMY_ECHO'] = True
 
 app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
 
@@ -152,11 +152,14 @@ def add_post(user_id):
 
     title = request.form["title"]
     content = request.form["content"]
-    tags = request.form.getlist("tag")
-    print(tags)
+    tag_ids = request.form.getlist("tag")
 
     user = User.query.get(user_id)
     post = Post(title=title, content=content, user_id=user.id)
+
+    for tag_id in tag_ids:
+        tag = Tag.query.get(tag_id)
+        post.tags.append(tag)
 
     db.session.add(post)
     db.session.commit()
@@ -198,10 +201,16 @@ def edit_post(post_id):
 
     title = request.form["title"]
     content = request.form["content"]
+    tag_ids = request.form.getlist("tag")
 
     post = Post.query.get_or_404(post_id)
     post.title = title
     post.content = content
+    post.tags.clear()  # Fix this line - something like this
+
+    for tag_id in tag_ids:
+        tag = Tag.query.get(tag_id)
+        post.tags.append(tag)
 
     db.session.commit()
 
