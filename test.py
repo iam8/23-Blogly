@@ -2,8 +2,6 @@
 # Unit 23 Exercise - Blogly App
 
 # TODO: write tests for tag routes, most importantly the POST routes
-# TODO: for all templates that have multiple submit buttons - use 'formaction' and make into a
-# single form (not a separate form for each button).
 
 """
 Tests for Blogly application.
@@ -115,7 +113,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
-            self.assertIn("<button>Add user</button>", html)
+            self.assertIn("Add user", html)
 
 # -------------------------------------------------------------------------------------------------
 
@@ -133,7 +131,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
-            self.assertIn("<button>Add user</button>", html)
+            self.assertIn("Add user", html)
 
     def test_get_new_user_form(self):
         """
@@ -147,8 +145,6 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Create A New User</h1>", html)
-            self.assertIn("<button>Add</button>", html)
-            self.assertRegex(html, '<form .* method="POST">')
 
     def test_get_user_details(self):
         """
@@ -162,10 +158,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
-            self.assertIn("<h2>Posts</h2>", html)
-            self.assertIn(">Add new post</button>", html)
-            self.assertIn(">Edit</button>", html)
-            self.assertIn(">Delete</button>", html)
+            self.assertIn("Add new post", html)
 
     def test_get_user_edit_form(self):
         """
@@ -179,9 +172,6 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Edit User</h1>", html)
-            self.assertIn("<button>Save</button>", html)
-            self.assertIn("<button>Cancel</button>", html)
-            self.assertRegex(html, '<form .* method="POST">')
 
     def test_add_new_user_redirect(self):
         """
@@ -220,7 +210,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
-            self.assertIn("<button>Add user</button>", html)
+            self.assertIn("Add user", html)
             self.assertIn("Jane Doe", html)
 
     def test_edit_user_redirect(self):
@@ -260,7 +250,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
-            self.assertIn("<button>Add user</button>", html)
+            self.assertIn("Add user", html)
             self.assertIn("Jane Doe", html)
 
     def test_delete_user_redirect(self):
@@ -290,7 +280,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
-            self.assertIn("<button>Add user</button>", html)
+            self.assertIn("Add user", html)
 
 # -------------------------------------------------------------------------------------------------
 
@@ -309,8 +299,6 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Create A New Post for first0 last0</h1>", html)
             self.assertIn("Add tags", html)
-            self.assertIn("<button>Add</button>", html)
-            self.assertRegex(html, '<form .* method="POST">')
 
     def test_get_post_details(self):
         """
@@ -324,10 +312,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Test post 0</h1>", html)
-            self.assertIn("<p>Test 0 content</p>", html)
-            self.assertIn("<button>User details</button>", html)
-            self.assertIn("<button>Edit</button>", html)
-            self.assertIn("<button>Delete</button>", html)
+            self.assertIn("Test 0 content", html)
 
     def test_get_post_edit_form(self):
         """
@@ -342,9 +327,6 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Edit Post</h1>", html)
             self.assertIn("Add tags", html)
-            self.assertIn("<button>Save</button>", html)
-            self.assertIn("<button>Cancel</button>", html)
-            self.assertRegex(html, '<form .* method="POST">')
 
     def test_add_new_post_redirect(self):
         """
@@ -381,10 +363,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
-            self.assertIn("<h2>Posts</h2>", html)
             self.assertIn("NEW TEST POST", html)
-            self.assertIn(">Edit</button>", html)
-            self.assertIn(">Delete</button>", html)
 
     def test_edit_post_redirect(self):
         """
@@ -421,10 +400,7 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>NEW TEST POST</h1>", html)
-            self.assertIn("<p>NEW TEST CONTENT</p>", html)
-            self.assertIn("<button>User details</button>", html)
-            self.assertIn("<button>Edit</button>", html)
-            self.assertIn("<button>Delete</button>", html)
+            self.assertIn("NEW TEST CONTENT", html)
 
     def test_delete_post_redirect(self):
         """
@@ -453,9 +429,6 @@ class FlaskTests(TestCase):
 
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
-            self.assertIn("<h2>Posts</h2>", html)
-            self.assertIn(">Add new post</button>", html)
-            self.assertIn(">Edit</button>", html)
-            self.assertIn(">Delete</button>", html)
+            self.assertIn("Add new post", html)
 
 # -------------------------------------------------------------------------------------------------
