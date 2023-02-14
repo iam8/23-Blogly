@@ -15,18 +15,27 @@
 
     <h1>{{ tag.name }}</h1>
 
+    <div>
+        <b>Posts with this tag</b>
+    </div>
     {% for post in posts %}
         <li>
             <a href="/posts/{{ post.id }}">{{ post.title }}</a>
         </li>
     {% endfor %}
 
-    <form action="/tags/{{ tag.id }}/edit" method="GET">
-        <button>Edit</button>
-    </form>
+    <form>
+        <button class="btn btn-primary btn-sml"
+                formaction="/tags/{{ tag.id }}/edit"
+                formmethod="GET">
+            Edit tag
+        </button>
 
-    <form action="/tags/{{ tag.id }}/delete" method="POST">
-        <button>Delete</button>
+        <button class="btn btn-danger btn-sml"
+                formaction="/tags/{{ tag.id }}/delete"
+                formmethod="POST">
+            Delete tag
+        </button>
     </form>
 
 {% endblock content %}

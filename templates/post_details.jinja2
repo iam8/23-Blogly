@@ -30,16 +30,24 @@
         {% endfor %}
     </div>
 
-    <form action="/users/{{ user.id }}" method="GET">
-        <button>User details</button>
-    </form>
+    <form>
+        <button class="btn btn-primary btn-sml"
+                formaction="/users/{{ user.id }}"
+                formmethod="GET">
+            User details
+        </button>
 
-    <form action="/posts/{{ post.id }}/edit" method="GET">
-        <button>Edit</button>
-    </form>
+        <button class="btn btn-primary btn-sml"
+                formaction="/posts/{{ post.id }}/edit"
+                formmethod="GET">
+            Edit post
+        </button>
 
-    <form action="/posts/{{ post.id }}/delete" method="POST">
-        <button>Delete</button>
+        <button class="btn btn-danger btn-sml"
+                formaction="/posts/{{ post.id }}/delete"
+                formmethod="POST">
+            Delete post
+        </button>
     </form>
 
 {% endblock content %}
