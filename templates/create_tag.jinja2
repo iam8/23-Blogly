@@ -14,12 +14,31 @@
 
     <h1>Create A New Tag</h1>
 
-    <form action="/tags/new", method="POST">
+    {# <form action="/tags/new", method="POST">
 
         <label for="tagname">Name</label>
         <input id="tagname" type="text" name="tagname" placeholder="Enter a name for the tag">
 
         <button>Add</button>
+    </form> #}
+
+    <form>
+        <div>
+            <label for="tagname">Name</label>
+            <input id="tagname" type="text" name="tagname" placeholder="Enter a name for the tag">
+        </div>
+
+        <button class="btn btn-success btn-sml"
+                formaction="/tags/new"
+                formmethod="POST">
+            Add
+        </button>
+
+        <button class="btn btn-secondary btn-sml"
+                formaction="/tags"
+                formmethod="GET">
+            Cancel
+        </button>
     </form>
 
 {% endblock content %}
