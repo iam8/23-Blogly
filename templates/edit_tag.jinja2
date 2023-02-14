@@ -14,16 +14,23 @@
 
     <h1>Edit Tag</h1>
 
-    <form action="/tags/{{ tag.id }}/edit" method="POST">
+    <form>
+        <div>
+            <label for="tagname">Name</label>
+            <input id="tagname" type="text" name="tagname" placeholder="Enter a name for the tag">
+        </div>
 
-        <label for="tagname">Name</label>
-        <input id="tagname" type="text" name="tagname" placeholder="Enter a name for the tag">
+        <button class="btn btn-success btn-sml"
+                formaction="/tags/{{ tag.id }}/edit"
+                formmethod="POST">
+            Save
+        </button>
 
-        <button>Save</button>
-    </form>
-
-    <form action="/tags/{{ tag.id }}" method="GET">
-        <button>Cancel</button>
+        <button class="btn btn-secondary btn-sml"
+                formaction="/tags/{{ tag.id }}"
+                formmethod="GET">
+            Cancel
+        </button>
     </form>
 
 {% endblock content %}

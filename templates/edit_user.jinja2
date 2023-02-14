@@ -14,22 +14,36 @@
 
     <h1>Edit User</h1>
 
-    <form action="/users/{{ user.id }}/edit" method="POST">
+    <form>
+        <div>
+            <label for="fname">First Name</label>
+            <input id="fname" type="text" name="firstname" placeholder="Enter a first name">
+        </div>
 
-        <label for="fname">First Name</label>
-        <input id="fname" type="text" name="firstname" placeholder="Enter a first name">
+        <div>
+            <label for="lname">Last Name</label>
+            <input id="lname" type="text" name="lastname" placeholder="Enter a last name">
+        </div>
 
-        <label for="lname">Last Name</label>
-        <input id="lname" type="text" name="lastname" placeholder="Enter a last name">
+        <div>
+            <label for="img-url">Image URL</label>
+            <input id="img-url"
+                   type="text"
+                   name="imageurl"
+                   placeholder="Provide a link to an image for this user">
+        </div>
 
-        <label for="img-url">Image URL</label>
-        <input id="img-url" type="text" name="imageurl" placeholder="Provide a link to an image for this user">
+        <button class="btn btn-success btn-sml"
+                formaction="/users/{{ user.id }}/edit"
+                formmethod="POST">
+            Save
+        </button>
 
-        <button>Save</button>
-    </form>
-
-    <form action="/users/{{ user.id }}" method="GET">
-        <button>Cancel</button>
+        <button class="btn btn-secondary btn-sml"
+                formaction="/users/{{ user.id }}"
+                formmethod="GET">
+            Cancel
+        </button>
     </form>
 
 {% endblock content %}
