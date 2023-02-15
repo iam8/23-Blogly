@@ -1,8 +1,6 @@
 # Ioana A Mititean
 # Unit 23 Exercise - Blogly App
 
-# TODO: use bootstrap in solution to make app look slightly better
-
 """
 Tests for Blogly application.
 """
