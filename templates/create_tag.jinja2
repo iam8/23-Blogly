@@ -20,6 +20,10 @@
             <input id="tagname" type="text" name="tagname" placeholder="Enter a name for the tag">
         </div>
 
+        {% for msg in get_flashed_messages() %}
+            <li>{{ msg }}</li>
+        {% endfor %}
+
         <button class="btn btn-success btn-sml"
                 formaction="/tags/new"
                 formmethod="POST">
@@ -32,5 +36,7 @@
             Cancel
         </button>
     </form>
+
+
 
 {% endblock content %}
