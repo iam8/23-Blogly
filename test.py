@@ -1,11 +1,7 @@
 # Ioana A Mititean
 # Unit 23 Exercise - Blogly App
 
-# TODO: write tests to check that posts and users are updated accordingly in database (create,
-# update, delete ops)
-
-# TODO: write code in app.py that checks for IntegrityError if a tag with existing name is added
-# to DB
+# TODO: use bootstrap in solution to make app look slightly better
 
 """
 Tests for Blogly application.
