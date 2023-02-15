@@ -14,14 +14,16 @@
 
     <h1>Users</h1>
 
-    {% for user in users %}
-        <li>
-            <a href="/users/{{ user.id }}">{{ user.get_full_name() }}</a>
-        </li>
-    {% endfor %}
+    <ul>
+        {% for user in users %}
+            <li>
+                <a href="/users/{{ user.id }}">{{ user.get_full_name() }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 
-    <form action="/users/new", method="GET">
-        <button>Add user</button>
-    </form>
+    <p>
+        <a class="btn btn-sm btn-secondary" href="/users/new">Add user</a>
+    </p>
 
 {% endblock content %}

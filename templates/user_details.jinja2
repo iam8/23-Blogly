@@ -5,43 +5,54 @@
 
 {% extends "base.jinja2" %}
 
-
 {% block title %}
     User Details
 {% endblock title %}
 
 {% block content %}
 
-    <h1>{{ user.get_full_name() }}</h1>
-    <img src="{{ user.image_url }}" alt="{{ user.get_full_name() }}" class="img-fluid">
+    <div class="row">
 
-    <div>
-        <b>Posts</b>
+        <div class="col-4">
+            <img src="{{ user.image_url }}" alt="{{ user.get_full_name() }}" class="img-fluid">
+        </div>
+
+        <h1>{{ user.get_full_name() }}</h1>
+
+        <div>
+            <b>Posts</b>
+        </div>
+        {% if posts %}
+            <ul>
+                {% for post in posts %}
+                    <li>
+                        <a href="/posts/{{ post.id }}">{{ post.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>None</p>
+        {% endif %}
+
+        <form>
+            <button class="btn btn-primary btn-sml"
+                    formaction="/users/{{ user.id }}/posts/new"
+                    formmethod="GET">
+                Add new post
+            </button>
+
+            <button class="btn btn-primary btn-sml"
+                    formaction="/users/{{ user.id }}/edit"
+                    formmethod="GET">
+                Edit user
+            </button>
+
+            <button class="btn btn-danger btn-sml"
+                    formaction="/users/{{ user.id }}/delete"
+                    formmethod="POST">
+                Delete user
+            </button>
+        </form>
     </div>
-    {% for post in posts %}
-        <li>
-            <a href="/posts/{{ post.id }}">{{ post.title }}</a>
-        </li>
-    {% endfor %}
-
-    <form>
-        <button class="btn btn-primary btn-sml"
-                formaction="/users/{{ user.id }}/posts/new"
-                formmethod="GET">
-            Add new post
-        </button>
-
-        <button class="btn btn-primary btn-sml"
-                formaction="/users/{{ user.id }}/edit"
-                formmethod="GET">
-            Edit user
-        </button>
-
-        <button class="btn btn-danger btn-sml"
-                formaction="/users/{{ user.id }}/delete"
-                formmethod="POST">
-            Delete user
-        </button>
-    </form>
 
 {% endblock content %}

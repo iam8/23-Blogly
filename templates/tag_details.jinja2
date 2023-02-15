@@ -18,11 +18,17 @@
     <div>
         <b>Posts with this tag</b>
     </div>
-    {% for post in posts %}
-        <li>
-            <a href="/posts/{{ post.id }}">{{ post.title }}</a>
-        </li>
-    {% endfor %}
+    {% if posts %}
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <a href="/posts/{{ post.id }}">{{ post.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>None</p>
+    {% endif %}
 
     <form>
         <button class="btn btn-primary btn-sml"

@@ -14,29 +14,24 @@
 
     <h1>Create A New Tag</h1>
 
-    <form>
-        <div>
-            <label for="tagname">Name</label>
-            <input id="tagname" type="text" name="tagname" placeholder="Enter a name for the tag">
+    <form method="POST" action="/tags/new">
+        <div class="form-group row">
+            <label for="tagname" class="col-sm-2 col-form-label">Name</label>
+            <input id="tagname"
+                   class="form-control"
+                   type="text"
+                   name="tagname"
+                   placeholder="Enter a name for the tag">
         </div>
 
         {% for msg in get_flashed_messages() %}
-            <li>{{ msg }}</li>
+            <div class="alert alert-info">{{ msg }}</div>
         {% endfor %}
 
-        <button class="btn btn-success btn-sml"
-                formaction="/tags/new"
-                formmethod="POST">
-            Add
-        </button>
-
-        <button class="btn btn-secondary btn-sml"
-                formaction="/tags"
-                formmethod="GET">
-            Cancel
-        </button>
+        <div class="form-group text-right">
+            <a href="/tags" class="btn btn-outline-info">Cancel</a>
+            <button type="submit" class="btn btn-success">Add</button>
+        </div>
     </form>
-
-
 
 {% endblock content %}

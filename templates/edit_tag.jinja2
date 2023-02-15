@@ -5,7 +5,6 @@
 
 {% extends "base.jinja2" %}
 
-
 {% block title %}
     Edit Tag
 {% endblock title %}
@@ -14,23 +13,25 @@
 
     <h1>Edit Tag</h1>
 
-    <form>
-        <div>
-            <label for="tagname">Name</label>
-            <input id="tagname" type="text" name="tagname" placeholder="Enter a name for the tag">
+    <form method="POST" action="/tags/{{ tag.id }}/edit">
+        <div class="form-group row">
+            <label for="tagname" class="col-sm-2 col-form-label">Name</label>
+            <input id="tagname"
+                   class="form-control"
+                   type="text"
+                   name="tagname"
+                   value="{{ tag.name }}"
+                   placeholder="Enter a name for the tag">
         </div>
 
-        <button class="btn btn-success btn-sml"
-                formaction="/tags/{{ tag.id }}/edit"
-                formmethod="POST">
-            Save
-        </button>
+        {% for msg in get_flashed_messages() %}
+            <div class="alert alert-info">{{ msg }}</div>
+        {% endfor %}
 
-        <button class="btn btn-secondary btn-sml"
-                formaction="/tags/{{ tag.id }}"
-                formmethod="GET">
-            Cancel
-        </button>
+        <div class="form-group text-right">
+            <a href="/tags/{{ tag.id }}" class="btn btn-outline-info">Cancel</a>
+            <button type="submit" class="btn btn-success">Add</button>
+        </div>
     </form>
 
 {% endblock content %}

@@ -23,11 +23,16 @@
 
     <div>
         <b>Tags:</b>
-        {% for tag in tags %}
-            <span>
-                <a href="/tags/{{ tag.id }}">{{ tag.name }}</a>
-            </span>
-        {% endfor %}
+        {% if tags %}
+            {% for tag in tags %}
+                <span>
+                    <a href="/tags/{{ tag.id }}">{{ tag.name }}</a>
+                </span>
+            {% endfor %}
+        {% else %}
+            <span>None</span>
+        {% endif %}
+
     </div>
 
     <form>
