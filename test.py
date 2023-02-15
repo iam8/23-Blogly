@@ -1,7 +1,11 @@
 # Ioana A Mititean
 # Unit 23 Exercise - Blogly App
 
-# TODO: write tests for tag routes, most importantly the POST routes
+# TODO: write tests to check that posts and users are updated accordingly in database (create,
+# update, delete ops)
+
+# TODO: write code in app.py that checks for IntegrityError if a tag with existing name is added
+# to DB
 
 """
 Tests for Blogly application.
@@ -218,6 +222,20 @@ class FlaskTests(TestCase):
         Test that adding a new user is reflected in the database.
         """
 
+        with app.test_client() as client:
+            data = {"firstname": "Jane",
+                    "lastname": "Doe",
+                    "imageurl": "dummylink"}
+
+            client.post("/users/new",
+                        data=data,
+                        follow_redirects=True)
+
+            users = db.session.query(User.first_name, User.last_name, User.image_url).all()
+
+        self.assertIn(("Jane", "Doe", "dummylink"), users)
+        self.assertEqual(len(users), 2)
+
     def test_edit_user_redirect(self):
         """
         Test that editing a user results in a status code of 302 and redirects to the correct
@@ -263,6 +281,19 @@ class FlaskTests(TestCase):
         Test that editing an existing user is reflected in the database.
         """
 
+        with app.test_client() as client:
+            data = {"firstname": "Jane",
+                    "lastname": "Doe",
+                    "imageurl": "dummylink"}
+
+            client.post(f"/users/{self.user0_id}/edit",
+                        data=data,
+                        follow_redirects=True)
+
+            users = db.session.query(User.first_name, User.last_name, User.image_url).all()
+
+        self.assertEqual(users, [("Jane", "Doe", "dummylink")])
+
     def test_delete_user_redirect(self):
         """
         Test that deleting a user results in a status code of 302 and redirects to the appropriate
@@ -296,6 +327,14 @@ class FlaskTests(TestCase):
         """
         Test that deleting a user is reflected in the database.
         """
+
+        with app.test_client() as client:
+            client.post(f"/users/{self.user0_id}/delete",
+                        follow_redirects=True)
+
+            users = User.query.all()
+
+        self.assertEqual(users, [])
 
 # -------------------------------------------------------------------------------------------------
 
@@ -385,6 +424,19 @@ class FlaskTests(TestCase):
         Test that adding a new post is reflected in the database.
         """
 
+        with app.test_client() as client:
+            data = {"title": "NEW TEST POST",
+                    "content": "NEW TEST CONTENT"}
+
+            client.post(f"/users/{self.user0_id}/posts/new",
+                        data=data,
+                        follow_redirects=True)
+
+            posts = db.session.query(Post.title, Post.content).all()
+
+        self.assertIn(("NEW TEST POST", "NEW TEST CONTENT"), posts)
+        self.assertEqual(len(posts), 4)
+
     def test_edit_post_redirect(self):
         """
         Test that editing a post results in a status code of 302 and redirects to the correct
@@ -427,6 +479,20 @@ class FlaskTests(TestCase):
         Test that editing an existing post is reflected in the database.
         """
 
+        with app.test_client() as client:
+            data = {"title": "NEW TEST POST",
+                    "content": "NEW TEST CONTENT"}
+
+            client.post(f"/posts/{self.post0_id}/edit",
+                        data=data,
+                        follow_redirects=True)
+
+            posts = db.session.query(Post.title, Post.content).all()
+
+        # self.assertEqual(posts, [("NEW TEST POST", "NEW TEST CONTENT")])
+        self.assertIn(("NEW TEST POST", "NEW TEST CONTENT"), posts)
+        self.assertEqual(len(posts), 3)
+
     def test_delete_post_redirect(self):
         """
         Test that deleting a post results in a status code of 302 and redirects to the appropriate
@@ -460,5 +526,13 @@ class FlaskTests(TestCase):
         """
         Test that deleting a post is reflected in the database.
         """
+        with app.test_client() as client:
+            client.post(f"/posts/{self.post0_id}/delete",
+                        follow_redirects=True)
+
+            posts = db.session.query(Post.title, Post.content).all()
+
+        self.assertNotIn(("Test post 0", "Test 0 content"), posts)
+        self.assertEqual(len(posts), 2)
 
 # -------------------------------------------------------------------------------------------------
