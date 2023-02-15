@@ -281,13 +281,12 @@ def add_tag():
     name = request.form["tagname"]
     tag = Tag(name=name)
 
-    # Handle integrity error: redirect to current page and flash message
-
+    # Handle case when user inputs tag name that already exists
     try:
         db.session.add(tag)
         db.session.commit()
     except IntegrityError:
-        flash(message="ERROR: tag name already exists.", category="warning")
+        flash(message="ERROR: tag name already exists.", category="error")
         return redirect("/tags/new")
 
     return redirect("/tags")
