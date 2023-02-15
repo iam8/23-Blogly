@@ -213,6 +213,11 @@ class FlaskTests(TestCase):
             self.assertIn("Add user", html)
             self.assertIn("Jane Doe", html)
 
+    def test_add_user_database(self):
+        """
+        Test that adding a new user is reflected in the database.
+        """
+
     def test_edit_user_redirect(self):
         """
         Test that editing a user results in a status code of 302 and redirects to the correct
@@ -253,6 +258,11 @@ class FlaskTests(TestCase):
             self.assertIn("Add user", html)
             self.assertIn("Jane Doe", html)
 
+    def test_edit_user_database(self):
+        """
+        Test that editing an existing user is reflected in the database.
+        """
+
     def test_delete_user_redirect(self):
         """
         Test that deleting a user results in a status code of 302 and redirects to the appropriate
@@ -281,6 +291,11 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>Users</h1>", html)
             self.assertIn("Add user", html)
+
+    def test_delete_user_database(self):
+        """
+        Test that deleting a user is reflected in the database.
+        """
 
 # -------------------------------------------------------------------------------------------------
 
@@ -365,6 +380,11 @@ class FlaskTests(TestCase):
             self.assertIn("<h1>first0 last0</h1>", html)
             self.assertIn("NEW TEST POST", html)
 
+    def test_add_new_post_database(self):
+        """
+        Test that adding a new post is reflected in the database.
+        """
+
     def test_edit_post_redirect(self):
         """
         Test that editing a post results in a status code of 302 and redirects to the correct
@@ -402,6 +422,11 @@ class FlaskTests(TestCase):
             self.assertIn("<h1>NEW TEST POST</h1>", html)
             self.assertIn("NEW TEST CONTENT", html)
 
+    def test_edit_post_database(self):
+        """
+        Test that editing an existing post is reflected in the database.
+        """
+
     def test_delete_post_redirect(self):
         """
         Test that deleting a post results in a status code of 302 and redirects to the appropriate
@@ -430,5 +455,10 @@ class FlaskTests(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn("<h1>first0 last0</h1>", html)
             self.assertIn("Add new post", html)
+
+    def test_delete_post_database(self):
+        """
+        Test that deleting a post is reflected in the database.
+        """
 
 # -------------------------------------------------------------------------------------------------
