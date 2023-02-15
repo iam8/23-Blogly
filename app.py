@@ -5,9 +5,10 @@
 Blogly application - Flask setup and routes.
 """
 
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, Post, Tag, PLACEHOLDER_IMG
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 
@@ -280,8 +281,14 @@ def add_tag():
     name = request.form["tagname"]
     tag = Tag(name=name)
 
-    db.session.add(tag)
-    db.session.commit()
+    # Handle integrity error: redirect to current page and flash message
+
+    try:
+        db.session.add(tag)
+        db.session.commit()
+    except IntegrityError:
+        flash(message="ERROR: tag name already exists.", category="warning")
+        return redirect("/tags/new")
 
     return redirect("/tags")
 
